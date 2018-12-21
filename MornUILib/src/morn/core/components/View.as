@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.2.0707 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -9,14 +9,16 @@ package morn.core.components {
 	public class View extends Container {
 		/**加载模式使用，存储uixml*/
 		public static var xmlMap:Object = {};
-		protected static var uiClassMap:Object = {"Box": Box, "Button": Button, "CheckBox": CheckBox, "Clip": Clip, "ComboBox": ComboBox, "Component": Component, "Container": Container, "FrameClip": FrameClip, "HScrollBar": HScrollBar, "HSlider": HSlider, "Image": Image, "Label": Label, "LinkButton": LinkButton, "List": List, "Panel": Panel, "ProgressBar": ProgressBar, "RadioButton": RadioButton, "RadioGroup": RadioGroup, "ScrollBar": ScrollBar, "Slider": Slider, "Tab": Tab, "TextArea": TextArea, "TextInput": TextInput, "View": View, "ViewStack": ViewStack, "VScrollBar": VScrollBar, "VSlider": VSlider};
+		protected static var uiClassMap:Object = {"Box": Box, "Button": Button, "CheckBox": CheckBox, "Clip": Clip, "ComboBox": ComboBox, "Component": Component, "Container": Container, "FrameClip": FrameClip, "HScrollBar": HScrollBar, "HSlider": HSlider, "Image": Image, "Label": Label, "LinkButton": LinkButton, "List": List, "Panel": Panel, "ProgressBar": ProgressBar, "RadioButton": RadioButton, "RadioGroup": RadioGroup, "ScrollBar": ScrollBar, "Slider": Slider, "Tab": Tab, "TextArea": TextArea, "TextInput": TextInput, "View": View, "ViewStack": ViewStack, "VScrollBar": VScrollBar, "VSlider": VSlider, "Paging": Paging};
+		protected var viewClassMap:Object = {};
 		
 		protected function createView(xml:XML):void {
-			createComp(xml, this);
+			createComps(xml);
 		}
 		
-		protected function createComp(xml:XML, comp:Component = null):Component {
-			comp = comp || getCompInstance(xml);
+		protected function createComps(xml:XML, root:Boolean = true):Component {
+			var type:String = xml.name();
+			var comp:Component = root ? this : getCompsInstance(type);
 			comp.comXml = xml;
 			for (var i:int = 0, m:int = xml.children().length(); i < m; i++) {
 				var node:XML = xml.children()[i];
@@ -27,7 +29,7 @@ package morn.core.components {
 					var spaceY:int = int(xml.@spaceY);
 					for (var k:int = 0; k < column; k++) {
 						for (var l:int = 0; l < row; l++) {
-							var item:Component = createComp(node);
+							var item:Component = createComps(node, false);
 							item.name = "item" + (l + k * row);
 							item.x += l * (spaceX + item.width);
 							item.y += k * (spaceY + item.height);
@@ -35,7 +37,7 @@ package morn.core.components {
 						}
 					}
 				} else {
-					comp.addChild(createComp(node));
+					comp.addChild(createComps(node, false));
 				}
 			}
 			for each (var attrs:XML in xml.attributes()) {
@@ -50,11 +52,12 @@ package morn.core.components {
 			if (comp is IItem) {
 				IItem(comp).initItems();
 			}
+			//comp.showBorder();
 			return comp;
 		}
 		
-		protected function getCompInstance(xml:XML):Component {
-			var compClass:Class = Boolean(String(xml.@runtime)) ? App.asset.getClass(xml.@runtime) : uiClassMap[xml.name()];
+		protected function getCompsInstance(name:String):Component {
+			var compClass:Class = viewClassMap[name] || uiClassMap[name];
 			if (compClass != null) {
 				return new compClass();
 			}
@@ -72,13 +75,17 @@ package morn.core.components {
 		/**重新创建组件(通过修改组件的xml，实现动态更改UI视图)
 		 * @param comp 需要重新生成的组件 comp为null时，重新创建整个视图*/
 		public function reCreate(comp:Component = null):void {
-			comp = comp || this;
 			var dataSource:Object = comp.dataSource;
-			if (comp is Box) {
-				Box(comp).removeAllChild();
+			if (comp == null || comp == this) {
+				removeAllChild();
+				createComps(comXml);
+				this.dataSource = dataSource;
+			} else if (contains(comp)) {
+				var newComp:Component = createComps(comp.comXml, false);
+				newComp.dataSource = dataSource;
+				comp.parent.addChildAt(newComp, comp.parent.getChildIndex(comp));
+				comp.remove();
 			}
-			createComp(comp.comXml, comp);
-			comp.dataSource = dataSource;
 		}
 		
 		/**注册组件(用于扩展组件及修改组件对应关系)*/

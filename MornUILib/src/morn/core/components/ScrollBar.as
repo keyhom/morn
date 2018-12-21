@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -16,6 +16,8 @@ package morn.core.components {
 		public static const HORIZONTAL:String = "horizontal";
 		/**垂直移动*/
 		public static const VERTICAL:String = "vertical";
+		/**长按按钮，等待时间，使其可激活连续滚动*/
+		protected static const DELAY_TIME:int = 500;
 		protected var _scrollSize:Number = 1;
 		protected var _skin:String;
 		protected var _upButton:Button;
@@ -55,7 +57,7 @@ package morn.core.components {
 		protected function onButtonMouseDown(e:MouseEvent):void {
 			var isUp:Boolean = e.currentTarget == _upButton;
 			slide(isUp);
-			App.timer.doOnce(Styles.scrollBarDelayTime, startLoop, [isUp]);
+			App.timer.doOnce(DELAY_TIME, startLoop, [isUp]);
 			App.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		}
 		
@@ -98,7 +100,6 @@ package morn.core.components {
 			} else {
 				_slider.x = _upButton.width;
 			}
-			this
 			resetButtonPosition();
 		}
 		
@@ -205,9 +206,9 @@ package morn.core.components {
 			exeCallLater(changeSize);
 			_thumbPercent = value;
 			if (_slider.direction == VERTICAL) {
-				_slider.bar.height = Math.max(_slider.height * value, Styles.scrollBarMinNum);
+				_slider.bar.height = _slider.height * value;
 			} else {
-				_slider.bar.width = Math.max(_slider.width * value, Styles.scrollBarMinNum);
+				_slider.bar.width = _slider.width * value;
 			}
 		}
 	}

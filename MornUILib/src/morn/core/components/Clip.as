@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.2.0707 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -22,8 +22,6 @@ package morn.core.components {
 		protected var _bitmap:AutoBitmap;
 		protected var _clipX:int = 1;
 		protected var _clipY:int = 1;
-		protected var _clipWidth:Number;
-		protected var _clipHeight:Number;
 		protected var _url:String;
 		protected var _autoPlay:Boolean;
 		protected var _interval:int = Config.MOVIE_INTERVAL;
@@ -60,6 +58,7 @@ package morn.core.components {
 		protected function onRemovedFromStage(e:Event):void {
 			if (_autoStopAtRemoved) {
 				stop();
+				frame = 0;
 			}
 		}
 		
@@ -75,7 +74,7 @@ package morn.core.components {
 			}
 		}
 		
-		/**切片X轴数量*/
+		/**切片宽度*/
 		public function get clipX():int {
 			return _clipX;
 		}
@@ -87,7 +86,7 @@ package morn.core.components {
 			}
 		}
 		
-		/**切片Y轴数量*/
+		/**切片高度*/
 		public function get clipY():int {
 			return _clipY;
 		}
@@ -99,42 +98,16 @@ package morn.core.components {
 			}
 		}
 		
-		/**单切片宽度，同时设置优先级高于clipX*/
-		public function get clipWidth():Number {
-			return _clipWidth;
-		}
-		
-		public function set clipWidth(value:Number):void {
-			_clipWidth = value;
-			callLater(changeClip);
-		}
-		
-		/**单切片高度，同时设置优先级高于clipY*/
-		public function get clipHeight():Number {
-			return _clipHeight;
-		}
-		
-		public function set clipHeight(value:Number):void {
-			_clipHeight = value;
-			callLater(changeClip);
-		}
-		
 		protected function changeClip():void {
 			if (App.asset.hasClass(_url)) {
-				loadComplete(_url, App.asset.getBitmapData(_url));
+				clips = App.asset.getClips(_url, _clipX, _clipY);
 			} else {
 				App.loader.loadBMD(_url, new Handler(loadComplete, [_url]));
 			}
 		}
 		
 		protected function loadComplete(url:String, bmd:BitmapData):void {
-			if (url == _url && bmd) {
-				if (!isNaN(_clipWidth)) {
-					_clipX = Math.ceil(bmd.width / _clipWidth);
-				}
-				if (!isNaN(_clipHeight)) {
-					_clipY = Math.ceil(bmd.height / _clipHeight);
-				}
+			if (url == _url) {
 				clips = BitmapUtils.createClips(bmd, _clipX, _clipY);
 			}
 		}

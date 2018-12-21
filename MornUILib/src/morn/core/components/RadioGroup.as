@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -11,10 +11,6 @@ package morn.core.components {
 	
 	/**单选按钮组*/
 	public class RadioGroup extends Box implements IItem {
-		/**横向的*/
-		public static const HORIZENTAL:String = "horizontal";
-		/**纵向的*/
-		public static const VERTICAL:String = "vertical";
 		protected var _items:Vector.<RadioButton>;
 		protected var _selectHandler:Handler;
 		protected var _selectedIndex:int = -1;
@@ -25,7 +21,6 @@ package morn.core.components {
 		protected var _labelSize:Object;
 		protected var _labelBold:Object;
 		protected var _labelMargin:String;
-		protected var _direction:String = HORIZENTAL;
 		
 		public function RadioGroup(labels:String = null, skin:String = null) {
 			this.skin = skin;
@@ -128,10 +123,12 @@ package morn.core.components {
 				callLater(changeLabels);
 				if (Boolean(_labels)) {
 					var a:Array = _labels.split(",");
+					var right:int = 0
 					for (var i:int = 0, n:int = a.length; i < n; i++) {
 						var radio:RadioButton = new RadioButton(_skin, a[i]);
 						radio.name = "item" + i;
-						addChild(radio);
+						addElement(radio, right, 0);
+						right += radio.width;
 					}
 				}
 				initItems();
@@ -214,15 +211,8 @@ package morn.core.components {
 					radio.labelBold = _labelBold;
 				if (_labelMargin)
 					radio.labelMargin = _labelMargin;
-				if (_direction == HORIZENTAL) {
-					radio.y = 0;
-					radio.x = right;
-					right += radio.width;
-				} else {
-					radio.x = 0;
-					radio.y = right;
-					right += radio.height;
-				}
+				radio.x = right;
+				right += radio.width;
 			}
 		}
 		
@@ -274,16 +264,6 @@ package morn.core.components {
 					}
 				}
 			}
-		}
-		
-		/**布局方向*/
-		public function get direction():String {
-			return _direction;
-		}
-		
-		public function set direction(value:String):void {
-			_direction = value;
-			callLater(changeLabels);
 		}
 	}
 }
