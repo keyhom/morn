@@ -48,7 +48,7 @@ package morn.core.managers {
 		
 		private function showTip(tip:Object):void {
 			if (tip is String) {
-				var text:String = String(tip);
+				var text:String = tip as String;
 				if (Boolean(text)) {
 					_defaultTipHandler(text);
 				}
