@@ -12,10 +12,9 @@ package morn.core.managers {
 	import morn.core.components.Styles;
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
-	import morn.core.components.Container;
 	
 	/**菜单管理类*/
-	public class MenuManager extends Container {
+	public class MenuManager extends Sprite {
 		public static var offsetX:int = 15;
 		public static var offsetY:int = 15;
 		private var _menuBox:Sprite;
