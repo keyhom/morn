@@ -184,15 +184,15 @@ package morn.core.components {
 		}
 		
 		/**设置可视区域大小*/
-		public function setContentSize(width:Number, height:Number):void {
+		public function setContentSize(widht:Number, height:Number):void {
 			var g:Graphics = _content.graphics;
 			g.clear();
 			g.beginFill(0xffff00, 0);
-			g.drawRect(0, 0, width, height);
+			g.drawRect(0, 0, widht, height);
 			g.endFill();
-			_content.width = width;
+			_content.width = widht;
 			_content.height = height;
-			_content.scrollRect = new Rectangle(0, 0, width, height);
+			_content.scrollRect = new Rectangle(0, 0, widht, height);
 		}
 		
 		protected function onCellMouse(e:MouseEvent):void {
