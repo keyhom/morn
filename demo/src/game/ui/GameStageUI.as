@@ -2,7 +2,7 @@
 package game.ui {
 	import morn.core.components.*;
 	public class GameStageUI extends View {
-		protected static var uiXML:XML =
+		protected var uiXML:XML =
 			<View>
 			  <Button label="按钮" skin="png.comp.button" x="35" y="60"/>
 			  <Button label="多选框" skin="png.comp.button" x="35" y="98"/>
@@ -28,7 +28,6 @@ package game.ui {
 			</View>;
 		public function GameStageUI(){}
 		override protected function createChildren():void {
-			super.createChildren();
 			createView(uiXML);
 		}
 	}
