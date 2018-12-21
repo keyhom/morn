@@ -29,7 +29,7 @@ package morn.core.components
 		public var fixedNum:int = 0;
 		
 		public function NumericStepper(skin:String = null) {
-			this._skin = skin;
+			this.skin = skin;
 		}
 		
 		override protected function preinitialize():void {
