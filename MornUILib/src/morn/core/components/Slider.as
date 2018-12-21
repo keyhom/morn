@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://www.mornui.com/
+ * Morn UI Version 2.0.0526 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -161,7 +161,7 @@ package morn.core.components {
 		public function setSlider(min:Number, max:Number, value:Number):void {
 			_min = min;
 			_max = max > min ? max : min;
-			this.value = value < min ? min : value > max ? max : value;
+			this.value = value;
 		}
 		
 		/**刻度值*/
