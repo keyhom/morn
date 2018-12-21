@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.5.1215 http://www.mornui.com/
+ * Morn UI Version 2.4.1027 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -210,7 +210,7 @@ package morn.core.components {
 				}
 			}
 			if (_mouseHandler != null) {
-				_mouseHandler.executeWith([e, index]);
+				_mouseHandler.executeWith([e.type, index]);
 			}
 		}
 		
@@ -367,8 +367,6 @@ package morn.core.components {
 					_scrollBar.scrollSize = _cellSize;
 					_scrollBar.thumbPercent = lineNum / lineCount;
 					_scrollBar.setScroll(0, (lineCount - lineNum) * _cellSize, _startIndex * _cellSize);
-				} else {
-					_scrollBar.setScroll(0, 0, 0);
 				}
 			}
 		}

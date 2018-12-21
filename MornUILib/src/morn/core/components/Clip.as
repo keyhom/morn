@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.5.1215 http://www.mornui.com/
+ * Morn UI Version 2.4.1020 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -7,6 +7,7 @@ package morn.core.components {
 	import flash.events.Event;
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
+	import morn.core.utils.BitmapUtils;
 	import morn.core.utils.StringUtils;
 	import morn.editor.core.IClip;
 	
@@ -120,7 +121,7 @@ package morn.core.components {
 		
 		protected function changeClip():void {
 			if (App.asset.hasClass(_url)) {
-				loadComplete(_url, App.asset.getBitmapData(_url, false));
+				loadComplete(_url, App.asset.getBitmapData(_url));
 			} else {
 				App.loader.loadBMD(_url, new Handler(loadComplete, [_url]));
 			}
@@ -134,9 +135,7 @@ package morn.core.components {
 				if (!isNaN(_clipHeight)) {
 					_clipY = Math.ceil(bmd.height / _clipHeight);
 				}
-				App.asset.cacheBitmapData(url, bmd);
-				clips = App.asset.getClips(url, _clipX, _clipY);
-				App.asset.disposeBitmapData(url);
+				clips = BitmapUtils.createClips(bmd, _clipX, _clipY);
 			}
 		}
 		
@@ -313,8 +312,8 @@ package morn.core.components {
 		/**销毁资源
 		 * @param	clearFromLoader 是否同时删除加载缓存*/
 		public function dispose(clearFromLoader:Boolean = false):void {
-			_bitmap.bitmapData = null;
 			App.asset.destroyClips(_url);
+			_bitmap.bitmapData = null;
 			if (clearFromLoader) {
 				App.loader.clearResLoaded(_url);
 			}
