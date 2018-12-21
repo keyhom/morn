@@ -42,7 +42,7 @@ package morn.core.components {
 		protected var _right:Number = Number.NaN;
 		protected var _centerX:Number = Number.NaN;
 		protected var _centerY:Number = Number.NaN;
-		protected var _layOutEnabled:Boolean;
+		protected var _layOutEabled:Boolean;
 		
 		public function Component() {
 			mouseChildren = tabEnabled = tabChildren = false;
@@ -156,7 +156,7 @@ package morn.core.components {
 			if (_width != value) {
 				_width = value;
 				callLater(changeSize);
-				if (_layOutEnabled) {
+				if (_layOutEabled) {
 					callLater(resetPosition);
 				}
 			}
@@ -195,7 +195,7 @@ package morn.core.components {
 			if (_height != value) {
 				_height = value;
 				callLater(changeSize);
-				if (_layOutEnabled) {
+				if (_layOutEabled) {
 					callLater(resetPosition);
 				}
 			}
@@ -375,7 +375,7 @@ package morn.core.components {
 		
 		public function set top(value:Number):void {
 			_top = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
 		/**居父容器底部的距离*/
@@ -385,7 +385,7 @@ package morn.core.components {
 		
 		public function set bottom(value:Number):void {
 			_bottom = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
 		/**居父容器左边的距离*/
@@ -395,7 +395,7 @@ package morn.core.components {
 		
 		public function set left(value:Number):void {
 			_left = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
 		/**居父容器右边的距离*/
@@ -405,7 +405,7 @@ package morn.core.components {
 		
 		public function set right(value:Number):void {
 			_right = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
 		/**居父容器水平居中位置的偏移*/
@@ -415,7 +415,7 @@ package morn.core.components {
 		
 		public function set centerX(value:Number):void {
 			_centerX = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
 		/**居父容器垂直居中位置的偏移*/
@@ -425,12 +425,12 @@ package morn.core.components {
 		
 		public function set centerY(value:Number):void {	
 			_centerY = value;
-			layOutEnabled = true;
+			layOutEabled = true;
 		}
 		
-		private function set layOutEnabled(value:Boolean):void {
-			if (_layOutEnabled != value) {
-				_layOutEnabled = value;
+		private function set layOutEabled(value:Boolean):void {
+			if (_layOutEabled != value) {
+				_layOutEabled = value;
 				addEventListener(Event.ADDED, onAdded);
 				addEventListener(Event.REMOVED, onRemoved);
 			}
