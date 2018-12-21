@@ -38,4 +38,4 @@ demo -------- Sample Code
 
 doc --------- documentation and tutorials
 
-plugins ----- editor plug-ins and source code
+plugins ----- plug-ins and source code editor
