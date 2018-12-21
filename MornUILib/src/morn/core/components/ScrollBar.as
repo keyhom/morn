@@ -100,6 +100,7 @@ package morn.core.components {
 			} else {
 				_slider.x = _upButton.width;
 			}
+			this
 			resetButtonPosition();
 		}
 		
