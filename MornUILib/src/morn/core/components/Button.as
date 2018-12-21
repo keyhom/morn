@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.4.1021 http://www.mornui.com/
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -156,7 +156,7 @@ package morn.core.components {
 		
 		/**按钮标签颜色(格式:upColor,overColor,downColor,disableColor)*/
 		public function get labelColors():String {
-			return String(_labelColors);
+			return _labelColors as String;
 		}
 		
 		public function set labelColors(value:String):void {
@@ -166,7 +166,7 @@ package morn.core.components {
 		
 		/**按钮标签边距(格式:左边距,上边距,右边距,下边距)*/
 		public function get labelMargin():String {
-			return String(_labelMargin);
+			return _labelMargin as String;
 		}
 		
 		public function set labelMargin(value:String):void {

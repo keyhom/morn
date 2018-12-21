@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.4.1021 http://www.mornui.com/
+ * Morn UI Version 2.2.0707 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -120,9 +120,7 @@ package morn.core.components {
 			var max:Number = 0;
 			for (var i:int = numChildren - 1; i > -1; i--) {
 				var comp:DisplayObject = getChildAt(i);
-				if (comp.visible) {
-					max = Math.max(comp.x + comp.width * comp.scaleX, max);
-				}
+				max = Math.max(comp.x + comp.width, max);
 			}
 			return max;
 		}
@@ -150,9 +148,7 @@ package morn.core.components {
 			var max:Number = 0;
 			for (var i:int = numChildren - 1; i > -1; i--) {
 				var comp:DisplayObject = getChildAt(i);
-				if (comp.visible) {
-					max = Math.max(comp.y + comp.height * comp.scaleY, max);
-				}
+				max = Math.max(comp.y + comp.height, max);
 			}
 			return max;
 		}
@@ -162,16 +158,6 @@ package morn.core.components {
 				_height = value;
 				callLater(changeSize);
 			}
-		}
-		
-		override public function set scaleX(value:Number):void {
-			super.scaleX = value;
-			callLater(changeSize);
-		}
-		
-		override public function set scaleY(value:Number):void {
-			super.scaleY = value;
-			callLater(changeSize);
 		}
 		
 		/**执行影响宽高的延迟函数*/
@@ -295,13 +281,8 @@ package morn.core.components {
 		public function set toolTip(value:Object):void {
 			if (_toolTip != value) {
 				_toolTip = value;
-				if (Boolean(value)) {
-					addEventListener(MouseEvent.ROLL_OVER, onRollMouse);
-					addEventListener(MouseEvent.ROLL_OUT, onRollMouse);
-				} else {
-					removeEventListener(MouseEvent.ROLL_OVER, onRollMouse);
-					removeEventListener(MouseEvent.ROLL_OUT, onRollMouse);
-				}
+				addEventListener(MouseEvent.ROLL_OVER, onRollMouse);
+				addEventListener(MouseEvent.ROLL_OUT, onRollMouse);
 			}
 		}
 		

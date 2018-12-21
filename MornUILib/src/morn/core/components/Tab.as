@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.4.1020 http://www.mornui.com/
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -203,7 +203,7 @@ package morn.core.components {
 		}
 		
 		protected function changeLabels():void {
-			var left:Number = 0
+			var right:int = 0
 			for (var i:int = 0, n:int = _items.length; i < n; i++) {
 				var btn:Button = _items[i] as Button;
 				if (_skin)
@@ -220,12 +220,12 @@ package morn.core.components {
 					btn.labelMargin = _labelMargin;
 				if (_direction == HORIZENTAL) {
 					btn.y = 0;
-					btn.x = left;
-					left += btn.width;
+					btn.x = right;
+					right += btn.width;
 				} else {
 					btn.x = 0;
-					btn.y = left;
-					left += btn.height;
+					btn.y = right;
+					right += btn.height;
 				}
 			}
 		}

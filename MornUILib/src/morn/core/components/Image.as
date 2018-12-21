@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.4.1021 http://www.mornui.com/
+ * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -103,7 +103,7 @@ package morn.core.components {
 		override public function set dataSource(value:Object):void {
 			_dataSource = value;
 			if (value is String) {
-				url = String(value);
+				url = value as String;
 			} else {
 				super.dataSource = value;
 			}
