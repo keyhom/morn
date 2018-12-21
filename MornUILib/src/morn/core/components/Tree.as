@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.events.Event;
@@ -26,16 +26,6 @@ package morn.core.components {
 		
 		public function Tree() {
 			width = height = 200;
-		}
-		
-		/**销毁*/
-		override public function dispose():void {
-			super.dispose();
-			_list && _list.dispose();
-			_list = null;
-			_source = null;
-			_xml = null;
-			_renderHandler = null;
 		}
 		
 		override protected function createChildren():void {
@@ -258,8 +248,7 @@ package morn.core.components {
 		
 		protected function parseXml(xml:XML, source:Array, nodeParent:Object, isRoot:Boolean):void {
 			var obj:Object;
-			//[IF-SCRIPT]var childCount:int = xml.children().lengths();
-			/*[IF-FLASH]*/var childCount:int = xml.children().length();
+			var childCount:int = xml.children().length();
 			if (!isRoot) {
 				obj = {};
 				for each (var attrs:XML in xml.attributes()) {

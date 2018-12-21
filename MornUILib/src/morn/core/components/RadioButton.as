@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.events.Event;
@@ -12,12 +12,6 @@ package morn.core.components {
 		
 		public function RadioButton(skin:String = null, label:String = "") {
 			super(skin, label);
-		}
-		
-		/**销毁*/
-		override public function dispose():void {
-			super.dispose();
-			_value = null;
 		}
 		
 		override protected function preinitialize():void {

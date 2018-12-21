@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.display.DisplayObject;
@@ -18,17 +18,6 @@ package morn.core.components {
 		
 		public function Panel() {
 			width = height = 100;
-		}
-		
-		/**销毁*/
-		override public function dispose():void {
-			super.dispose();
-			_content && _content.dispose();
-			_vScrollBar && _vScrollBar.dispose();
-			_hScrollBar && _hScrollBar.dispose();
-			_content = null;
-			_vScrollBar = null;
-			_hScrollBar = null;
 		}
 		
 		override protected function createChildren():void {
@@ -155,7 +144,7 @@ package morn.core.components {
 		
 		/**垂直滚动条皮肤*/
 		public function get vScrollBarSkin():String {
-			return _vScrollBar?_vScrollBar.skin:null;
+			return _vScrollBar.skin;
 		}
 		
 		public function set vScrollBarSkin(value:String):void {
@@ -170,7 +159,7 @@ package morn.core.components {
 		
 		/**水平滚动条皮肤*/
 		public function get hScrollBarSkin():String {
-			return _hScrollBar?_hScrollBar.skin:null;
+			return _hScrollBar.skin;
 		}
 		
 		public function set hScrollBarSkin(value:String):void {

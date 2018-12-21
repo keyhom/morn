@@ -1,6 +1,6 @@
 /**
- * Morn UI Version 3.2 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Morn UI Version 3.0 http://www.mornui.com/
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.utils {
 	import flash.display.Bitmap;
@@ -16,16 +16,13 @@ package morn.core.utils {
 	public class ObjectUtils {
 		/**添加滤镜*/
 		public static function addFilter(target:DisplayObject, filter:BitmapFilter):void {
-			/*[IF-FLASH-BEGIN]*/
 			var filters:Array = target.filters || [];
 			filters.push(filter);
 			target.filters = filters;
-			/*[IF-FLASH-END]*/
 		}
 		
 		/**清除滤镜*/
 		public static function clearFilter(target:DisplayObject, filterType:Class):void {
-			/*[IF-FLASH-BEGIN]*/
 			var filters:Array = target.filters;
 			if (filters != null && filters.length > 0) {
 				for (var i:int = filters.length - 1; i > -1; i--) {
@@ -36,7 +33,6 @@ package morn.core.utils {
 				}
 				target.filters = filters;
 			}
-			/*[IF-FLASH-END]*/
 		}
 		
 		/**clone副本*/

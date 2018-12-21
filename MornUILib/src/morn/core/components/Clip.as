@@ -1,6 +1,6 @@
 /**
- * Morn UI Version 3.2 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Morn UI Version 3.0 http://www.mornui.com/
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.display.BitmapData;
@@ -21,8 +21,8 @@ package morn.core.components {
 		protected var _bitmap:AutoBitmap;
 		protected var _clipX:int = 1;
 		protected var _clipY:int = 1;
-		protected var _clipWidth:Number = Number.NaN;
-		protected var _clipHeight:Number = Number.NaN;
+		protected var _clipWidth:Number;
+		protected var _clipHeight:Number;
 		protected var _url:String;
 		protected var _autoPlay:Boolean;
 		protected var _interval:int = Config.MOVIE_INTERVAL;
@@ -185,7 +185,7 @@ package morn.core.components {
 		}
 		
 		public function set sizeGrid(value:String):void {
-			_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value, int);
+			_bitmap.sizeGrid = StringUtils.fillArray(Styles.defaultSizeGrid, value);
 		}
 		
 		/**当前帧*/
@@ -194,7 +194,7 @@ package morn.core.components {
 		}
 		
 		public function set frame(value:int):void {
-			_bitmap.index = int(value);
+			_bitmap.index = value;
 			sendEvent(UIEvent.FRAME_CHANGED);
 			if (_bitmap.index == _to) {
 				stop();
@@ -348,20 +348,12 @@ package morn.core.components {
 		
 		/**销毁资源
 		 * @param	clearFromLoader 是否同时删除加载缓存*/
-		public function destroy(clearFromLoader:Boolean = false):void {
+		public function dispose(clearFromLoader:Boolean = false):void {
+			_bitmap.bitmapData = null;
 			App.asset.destroyClips(_url);
 			if (clearFromLoader) {
 				App.mloader.clearResLoaded(_url);
 			}
-			dispose();
-		}
-		
-		/**销毁*/
-		override public function dispose():void {
-			super.dispose();
-			_bitmap && _bitmap.dispose();
-			_bitmap = null;
-			_complete = null;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.managers {
 	import flash.display.Bitmap;
@@ -112,8 +112,7 @@ package morn.core.managers {
 			var content:* = null;
 			if (_type == SWF || _type == BMD) {
 				if (_urlLoader.data != null) {
-					/*[IF-FLASH]*/_loader.loadBytes(_urlLoader.data, _loaderContext);
-					//[IF-SCRIPT]_loader.loadBytes(_urlLoader.data, _loaderContext,e.currentTarget.fileData);
+					_loader.loadBytes(_urlLoader.data, _loaderContext);
 					_urlLoader.data = null;
 					return;
 				}

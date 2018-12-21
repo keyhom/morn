@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.display.Bitmap;
@@ -9,25 +9,17 @@ package morn.core.components {
 	
 	/**增强的Bitmap，封装了位置，宽高及九宫格的处理，供组件使用*/
 	public final class AutoBitmap extends Bitmap {
-		private var _width:Number = Number.NaN;
-		private var _height:Number = Number.NaN;
+		private var _width:Number;
+		private var _height:Number;
 		private var _sizeGrid:Array;
 		private var _source:Vector.<BitmapData>;
 		private var _clips:Vector.<BitmapData>;
-		private var _index:int = 0;
+		private var _index:int;
 		private var _smoothing:Boolean = Styles.smoothing;
-		private var _anchorX:Number = Number.NaN;
-		private var _anchorY:Number = Number.NaN;
+		private var _anchorX:Number;
+		private var _anchorY:Number;
 		
 		public function AutoBitmap() {
-		}
-		
-		/**销毁*/
-		public function dispose():void {
-			_sizeGrid = null;
-			_source = null;
-			_clips = null;
-			bitmapData = null;
 		}
 		
 		/**宽度(显示时四舍五入)*/
@@ -167,6 +159,11 @@ package morn.core.components {
 		
 		public function set anchorY(value:Number):void {
 			_anchorY = value;
+		}
+		
+		/**销毁*/
+		public function dispose():void {
+			bitmapData = null;
 		}
 	}
 }

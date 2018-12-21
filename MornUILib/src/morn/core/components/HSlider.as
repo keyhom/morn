@@ -1,6 +1,6 @@
 /**
  * Morn UI Version 3.0 http://www.mornui.com/
- * Feedback yungvip@163.com weixin:yungzhu
+ * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	
@@ -9,6 +9,10 @@ package morn.core.components {
 		
 		public function HSlider(skin:String = null) {
 			super(skin);
+		}
+		
+		override protected function preinitialize():void {
+			super.preinitialize();
 			direction = HORIZONTAL;
 		}
 	}
