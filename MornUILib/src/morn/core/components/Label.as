@@ -45,7 +45,6 @@ package morn.core.components {
 			_format.font = Styles.fontName;
 			_format.size = Styles.fontSize;
 			_format.color = Styles.labelColor;
-			_format.letterSpacing = Styles.letterSpacing;
 			_textField.selectable = false;
 			_textField.autoSize = TextFieldAutoSize.LEFT;
 			_bitmap.sizeGrid = [2, 2, 2, 2];
@@ -349,17 +348,6 @@ package morn.core.components {
 			} else {
 				super.dataSource = value;
 			}
-		}
-		
-		public function get letterSpacing():Object 
-		{
-			return _format.letterSpacing;
-		}
-		
-		public function set letterSpacing(value:Object):void 
-		{
-			_format.letterSpacing = value;
-			callLater(changeText);
 		}
 	}
 }

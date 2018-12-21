@@ -4,7 +4,6 @@
  */
 package morn.core.components {
 	import flash.events.Event;
-	
 	import morn.core.handlers.Handler;
 	
 	/**选择项改变后触发*/
@@ -12,11 +11,6 @@ package morn.core.components {
 	
 	/**Tab标签*/
 	public class Tab extends Box implements IItem {
-		/**横向的*/
-		public static const HORIZENTAL:String = "horizontal";
-		/**纵向的*/
-		public static const VERTICAL:String = "vertical";
-		
 		protected var _items:Vector.<ISelect>;
 		protected var _selectHandler:Handler;
 		protected var _selectedIndex:int;
@@ -27,8 +21,7 @@ package morn.core.components {
 		protected var _labelSize:Object;
 		protected var _labelBold:Object;
 		protected var _labelMargin:String;
-		protected var _direction:String = HORIZENTAL;
-
+		
 		public function Tab(labels:String = null, skin:String = null) {
 			this.skin = skin;
 			this.labels = labels;
@@ -222,15 +215,8 @@ package morn.core.components {
 					btn.labelBold = _labelBold;
 				if (_labelMargin)
 					btn.labelMargin = _labelMargin;
-				if(this.direction == HORIZENTAL){
-					btn.y = 0;
-					btn.x = right;
-					right += btn.width;
-				}else{
-					btn.x = 0;
-					btn.y = right;
-					right += btn.height;
-				}
+				btn.x = right;
+				right += btn.width;
 			}
 		}
 		
@@ -250,20 +236,6 @@ package morn.core.components {
 		
 		public function set selection(value:ISelect):void {
 			selectedIndex = _items.indexOf(value);
-		}
-		
-		/**
-		 * 方向
-		 */
-		public function get direction():String
-		{
-			return _direction;
-		}
-		
-		public function set direction(value:String):void
-		{
-			_direction = value;
-			callLater(changeLabels);
 		}
 		
 		override public function set dataSource(value:Object):void {
