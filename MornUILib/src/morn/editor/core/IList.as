@@ -2,9 +2,12 @@
  * Morn UI Version 2.0.0526 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
-package morn.core.components {
+package morn.editor.core {
 	
-	public interface IItem {
-		function initItems():void
+	/**
+	 * list接口
+	 */
+	public interface IList {
+		
 	}
 }

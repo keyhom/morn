@@ -1,10 +1,9 @@
 /**
- * Morn UI Version 3.0 http://www.mornui.com/
+ * Morn UI Version 2.5.1215 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
 	import flash.display.DisplayObject;
-	import flash.display.InteractiveObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -26,13 +25,10 @@ package morn.core.components {
 		protected var _slider:Slider;
 		protected var _changeHandler:Handler;
 		protected var _thumbPercent:Number = 1;
-		protected var _target:InteractiveObject;
+		protected var _target:Component;
 		protected var _touchScrollEnable:Boolean = Config.touchScrollEnable;
-		protected var _mouseWheelEnable:Boolean = Config.mouseWheelEnable;
 		protected var _lastPoint:Point;
-		protected var _lastOffset:Number = 0;
-		protected var _autoHide:Boolean = true;
-		protected var _showButtons:Boolean = true;
+		protected var _lastOffset:Number;
 		
 		public function ScrollBar(skin:String = null):void {
 			this.skin = skin;
@@ -97,43 +93,35 @@ package morn.core.components {
 			if (_skin != value) {
 				_skin = value;
 				_slider.skin = _skin;
+				_upButton.skin = _skin + "$up";
+				_downButton.skin = _skin + "$down";
 				callLater(changeScrollBar);
 			}
 		}
 		
 		protected function changeScrollBar():void {
-			_upButton.visible = _showButtons;
-			_downButton.visible = _showButtons;
-			if (_showButtons) {
-				_upButton.skin = _skin + "$up";
-				_downButton.skin = _skin + "$down";
-			}
 			if (_slider.direction == VERTICAL) {
 				_slider.y = _upButton.height;
 			} else {
 				_slider.x = _upButton.width;
 			}
-			resetPositions();
+			resetButtonPosition();
 		}
 		
 		protected function resetButtonPosition():void {
 			if (_slider.direction == VERTICAL) {
 				_downButton.y = _slider.y + _slider.height;
-				_contentWidth = _slider.width;
+				_contentWidth = _downButton.width;
 				_contentHeight = _downButton.y + _downButton.height;
 			} else {
 				_downButton.x = _slider.x + _slider.width;
 				_contentWidth = _downButton.x + _downButton.width;
-				_contentHeight = _slider.height;
+				_contentHeight = _downButton.height;
 			}
 		}
 		
 		override protected function changeSize():void {
 			super.changeSize();
-			resetPositions();
-		}
-		
-		private function resetPositions():void {
 			if (_slider.direction == VERTICAL) {
 				_slider.height = height - _upButton.height - _downButton.height;
 			} else {
@@ -149,7 +137,6 @@ package morn.core.components {
 			_upButton.disabled = max <= 0;
 			_downButton.disabled = max <= 0;
 			_slider.bar.visible = max > 0;
-			visible = !(_autoHide && max <= min);
 		}
 		
 		/**最大滚动位置*/
@@ -159,7 +146,6 @@ package morn.core.components {
 		
 		public function set max(value:Number):void {
 			_slider.max = value;
-		
 		}
 		
 		/**最小滚动位置*/
@@ -189,7 +175,7 @@ package morn.core.components {
 			_slider.direction = value;
 		}
 		
-		/**九宫格信息，格式：左边距,上边距,右边距,下边距,是否重复填充(值为0或1)，例如：4,4,4,4,1*/
+		/**9宫格(格式[4,4,4,4]，分别为[左边距,上边距,右边距,下边距])*/
 		public function get sizeGrid():String {
 			return _slider.sizeGrid;
 		}
@@ -233,20 +219,18 @@ package morn.core.components {
 		}
 		
 		/**滚动对象*/
-		public function get target():InteractiveObject {
+		public function get target():Component {
 			return _target;
 		}
 		
-		public function set target(value:InteractiveObject):void {
+		public function set target(value:Component):void {
 			if (_target) {
 				_target.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 				_target.removeEventListener(MouseEvent.MOUSE_DOWN, onTargetMouseDown);
 			}
 			_target = value;
 			if (value) {
-				if (_mouseWheelEnable) {
-					_target.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-				}
+				_target.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 				if (_touchScrollEnable) {
 					_target.addEventListener(MouseEvent.MOUSE_DOWN, onTargetMouseDown);
 				}
@@ -260,48 +244,10 @@ package morn.core.components {
 		
 		public function set touchScrollEnable(value:Boolean):void {
 			_touchScrollEnable = value;
-			target = _target;
-		}
-		
-		/**是否滚轮滚动，默认为true*/
-		public function get mouseWheelEnable():Boolean {
-			return _mouseWheelEnable;
-		}
-		
-		public function set mouseWheelEnable(value:Boolean):void {
-			_mouseWheelEnable = value;
-			target = _target;
-		}
-		
-		/**是否自动隐藏滚动条(无需滚动时)，默认为true*/
-		public function get autoHide():Boolean {
-			return _autoHide;
-		}
-		
-		public function set autoHide(value:Boolean):void {
-			_autoHide = value;
-		}
-		
-		/**是否显示按钮，默认为true*/
-		public function get showButtons():Boolean {
-			return _showButtons;
-		}
-		
-		public function set showButtons(value:Boolean):void {
-			_showButtons = value;
-		}
-		
-		/**滚动变化时回调，回传value参数*/
-		public function get changeHandler():Handler {
-			return _changeHandler;
-		}
-		
-		public function set changeHandler(value:Handler):void {
-			_changeHandler = value;
 		}
 		
 		protected function onTargetMouseDown(e:MouseEvent):void {
-			//_target.mouseChildren = true;
+			_target.mouseChildren = true;
 			App.timer.clearTimer(tweenMove);
 			if (!this.contains(e.target as DisplayObject)) {
 				App.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp2);
@@ -315,7 +261,7 @@ package morn.core.components {
 			if (Math.abs(_lastOffset) >= 1) {
 				_lastPoint.x = App.stage.mouseX;
 				_lastPoint.y = App.stage.mouseY;
-				//_target.mouseChildren = false;
+				_target.mouseChildren = false;
 				value -= _lastOffset;
 			}
 		}
@@ -323,7 +269,6 @@ package morn.core.components {
 		protected function onStageMouseUp2(e:MouseEvent):void {
 			App.stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp2);
 			App.stage.removeEventListener(Event.ENTER_FRAME, onStageEnterFrame);
-			_lastOffset = _slider.direction == VERTICAL ? App.stage.mouseY - _lastPoint.y : App.stage.mouseX - _lastPoint.x;
 			if (Math.abs(_lastOffset) > 50) {
 				_lastOffset = 50 * (_lastOffset > 0 ? 1 : -1);
 			}
@@ -334,13 +279,13 @@ package morn.core.components {
 			_lastOffset = _lastOffset * 0.92;
 			value -= _lastOffset;
 			if (Math.abs(_lastOffset) < 0.5) {
-				//_target.mouseChildren = true;
+				_target.mouseChildren = true;
 				App.timer.clearTimer(tweenMove);
 			}
 		}
 		
 		protected function onMouseWheel(e:MouseEvent):void {
-			value += (e.delta < 0 ? 1 : -1) * _scrollSize * 3;
+			value += (e.delta < 0 ? 1 : -1) * _thumbPercent * (max - min);
 			if (value < max && value > min) {
 				e.stopPropagation();
 			}

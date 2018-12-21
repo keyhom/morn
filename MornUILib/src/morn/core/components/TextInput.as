@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 3.0 http://www.mornui.com/
+ * Morn UI Version 2.1.0623 http://www.mornui.com/
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -19,7 +19,6 @@ package morn.core.components {
 		
 		override protected function initialize():void {
 			super.initialize();
-			mouseChildren = true;
 			width = 128;
 			height = 22;
 			selectable = true;
@@ -34,8 +33,7 @@ package morn.core.components {
 		}
 		
 		protected function onTextFieldChange(e:Event):void {
-			text = _isHtml ? _textField.htmlText : _textField.text;
-			e.stopPropagation();
+			text = _textField.text;
 		}
 		
 		/**指示用户可以输入到控件的字符集*/
