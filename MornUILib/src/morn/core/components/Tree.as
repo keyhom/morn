@@ -258,13 +258,11 @@ package morn.core.components {
 		
 		protected function parseXml(xml:XML, source:Array, nodeParent:Object, isRoot:Boolean):void {
 			var obj:Object;
-			var list:XMLList = xml.children();
-			//[IF-SCRIPT]var childCount:int = list.lengths();
-			/*[IF-FLASH]*/var childCount:int = list.length();
+			//[IF-SCRIPT]var childCount:int = xml.children().lengths();
+			/*[IF-FLASH]*/var childCount:int = xml.children().length();
 			if (!isRoot) {
-				obj = { };
-				var list2:XMLList = xml.attributes();
-				for each (var attrs:XML in list2) {
+				obj = {};
+				for each (var attrs:XML in xml.attributes()) {
 					var prop:String = attrs.name().toString();
 					var value:String = attrs;
 					obj[prop] = value == "true" ? true : value == "false" ? false : value;
@@ -277,7 +275,7 @@ package morn.core.components {
 				source.push(obj);
 			}
 			for (var i:int = 0; i < childCount; i++) {
-				var node:XML = list[i];
+				var node:XML = xml.children()[i];
 				parseXml(node, source, obj, false);
 			}
 		}
