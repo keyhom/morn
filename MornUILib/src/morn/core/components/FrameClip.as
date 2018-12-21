@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.3.0810 http://www.mornui.com/
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -200,7 +200,7 @@ package morn.core.components {
 		 * @param to 结束帧或标签(为null时默认为最后一帧)
 		 */
 		public function playFromTo(from:Object = null, to:Object = null, complete:Handler = null):void {
-			from ||= 0;
+			from == null ? 0 : from;
 			_to = to == null ? _mc.totalFrames - 1 : to;
 			_complete = complete;
 			if (from is int) {
